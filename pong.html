@@ -1,0 +1,34 @@
+check<!DOCTYPE html>
+<button id="mute-button">Couper le son</button>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>paltform - pong</title>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+     
+    
+   <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.js"></script>
+		<script src="game/secret/script.js"></script>
+    <script src="game/audio.js"></script>
+    <script>
+    const muteButton = document.getElementById('mute-button');
+    muteButton.addEventListener('click', () => {
+  const audioElement = document.querySelector('audio');
+  audioElement.muted = !audioElement.muted;
+
+  if (audioElement.muted) {
+    muteButton.innerHTML = 'Remonter le son';
+  } else {
+    muteButton.innerHTML = 'Couper le son';
+  }
+});
+  </script>
+    <audio src="assets/audio/pong_theme.mp3" autoplay loop>
+  Votre navigateur ne supporte pas l'élément audio.
+</audio>
+<a href="testcenter.html"><button id="bouton">Retour</button></a>
+</body>
+</html>

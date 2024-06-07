@@ -1,0 +1,68 @@
+h1 {
+    text-align: center;
+    color: white;
+  }
+
+  h2 {
+    text-align: left;
+  }
+
+  h3 {
+    text-align: right;
+  }
+  header {
+    background-color: black;
+    text-align: center;
+  }
+  
+  .vertical-menu {
+          width: 100px;
+    float: left;
+    align-items: center;
+      }
+
+      .vertical-menu a {
+          background-color: #eee;
+          color: black;
+          display: block;
+          padding: 12px;
+          text-decoration: none;
+    float: left;
+    align-items: center;
+      }
+
+      .vertical-menu a:hover {
+          background-color: #ccc;
+      }
+
+      .vertical-menu a.active {
+          background-color: #04AA6D;
+          color: white;
+  }
+  .vertical-menu input {
+background-color: #4CAF50; /* Green */
+width: 125px;
+border: none;
+color: white;
+padding: 15px 32px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
+cursor: pointer;
+}
+.vertical-menu .hover {
+background-color: #4b4b4b;
+}
+
+/* Ensure the body allows scrolling */
+body {
+    overflow: auto;
+    margin: 5px;
+    padding: 0;
+}
+
+/* Add padding to bottom to ensure scrollability */
+body > *:last-child {
+    padding-bottom: 50px;
+}
