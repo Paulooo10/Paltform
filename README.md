@@ -8,7 +8,7 @@ Paltform is a html and js platform game.
 
 ## Usage
 
-You can test the game [here](https://UnusualPaltformGame.valv0fluttershy.repl.co).
+You can test the game [here](https://paltform.fr).
 
 the game is the same version for both player and devlopper. You can see new levels before it be commit.
 
