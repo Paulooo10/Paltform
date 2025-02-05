@@ -33,6 +33,9 @@ function setup() {
   engine = Engine.create({
     gravity: {
       y: config.world.gravity
+    },
+    timing: {
+      timeScale: 0.5
     }
   });
   world = engine.world;
@@ -133,7 +136,7 @@ window.requestAnimFrame = (function() {
         window.mozRequestAnimationFrame ||
         window.ieRequestAnimationFrame ||
         function(callback) {
-            window.setTimeout(callback, 1000 / 60);
+            window.setTimeout(callback, 1000 / 30);
         };
 })();
 
@@ -155,4 +158,3 @@ let render = function() {
     requestAnimFrame(render);
 };
 render();
-

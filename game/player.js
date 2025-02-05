@@ -1,4 +1,4 @@
- var number = 0;
+var number = 0;
 
 function plusOne(count) {
   number++;
@@ -39,15 +39,15 @@ class Player extends Body {
 
     // What angles touching blocks are touching the player at (tangents)
     let angleCollisions = [...new Set(bodies.filter(x => x.type === "block").map(x => x.angleCollision).filter(x => x !== null).map(x => Number(x) + 90))];
-    if(JSON.stringify(this.angleCollisions) !== JSON.stringify(angleCollisions)){
+    if (JSON.stringify(this.angleCollisions) !== JSON.stringify(angleCollisions)) {
       this.angleCollisions = angleCollisions;
       this.emit("collide", angleCollisions);
     }
-    
+
 
     // Set the player's inertia to infinity so that it stays upright and doesn't rotate to external forces
     bd.setInertia(this.body, Infinity);
-    
+
     // Sensors for touching blocks
     this.sensors = {
       // Whether the player is standing on something
@@ -64,21 +64,21 @@ class Player extends Body {
 
     // Moving Right
     if (keys["ArrowRight"] || keys["d"] || keys["D"]) {
-      if(this.speed < config.player.speed) this.speed += config.player.acceleration;
-      else this.speed += (config.player.speed - this.speed) / config.player.decceleration/5
+      if (this.speed < config.player.speed) this.speed += config.player.acceleration;
+      else this.speed += (config.player.speed - this.speed) / config.player.decceleration / 5
       this.emit("move.left", this);
     }
 
     // Moving Left
     if (keys["ArrowLeft"] || keys["q"] || keys["Q"]) {
-      if(this.speed > -config.player.speed) this.speed -= config.player.acceleration;
-      else this.speed += (-config.player.speed - this.speed) / config.player.decceleration/5
+      if (this.speed > -config.player.speed) this.speed -= config.player.acceleration;
+      else this.speed += (-config.player.speed - this.speed) / config.player.decceleration / 5
       this.emit("move.right", this);
     }
 
     // If not moving right or left, slow down
-    if(!keys["ArrowRight"] && !keys["ArrowLeft"] && !keys["q"] && !keys["d"] && !keys["Q"] && !keys["D"]){
-      this.speed += -this.speed/config.player.decceleration;
+    if (!keys["ArrowRight"] && !keys["ArrowLeft"] && !keys["q"] && !keys["d"] && !keys["Q"] && !keys["D"]) {
+      this.speed += -this.speed / config.player.decceleration;
     }
 
     // Apply Velocity
@@ -86,7 +86,7 @@ class Player extends Body {
       x: this.speed,
       y: constrain(this.body.velocity.y, -config.world.maxYVel, config.world.maxYVel)
     });
- 
+
     // Jumping and Wall-jumping
     if (keys["ArrowUp"] || keys["z"] || keys[" "] || keys["Z"]) {
       // If not touching left and right walls, wall-jump
@@ -95,54 +95,54 @@ class Player extends Body {
           x: 0,
           y: -5
         });
-        bd.applyForce(this.body, { 
+        bd.applyForce(this.body, {
           x: this.body.position.x,
           y: this.body.position.y + config.player.height / 2
-        }, { 
+        }, {
           x: 0,
-          y: -config.player.jumpForce
+          y: -config.player.jumpForce * 1.5  // Jump force
         });
         this.sensors.bottom = false;
         this.emit("jump.up", this);
         this.i
       } else {
-        if(config.player.actions.includes("wall jump")) {
+        if (config.player.actions.includes("wall jump")) {
           // Jump off a wall depending on which side the player is touching
           if (this.sensors.left) {
-            this.speed = config.player.speed/2;
+            this.speed = config.player.speed / 2;
             bd.setVelocity(this.body, {
-              x: config.player.jumpForce*2,
+              x: config.player.jumpForce * 2,
               y: -config.player.jumpForce
             })
             bd.translate(this.body, {
               x: 5,
               y: -5
             });
-            bd.applyForce(this.body, { 
-              x: this.body.position.x, 
-              y: this.body.position.y 
-            }, { 
-              x: config.player.jumpForce * 2, 
-              y: -config.player.jumpForce
+            bd.applyForce(this.body, {
+              x: this.body.position.x,
+              y: this.body.position.y
+            }, {
+              x: config.player.jumpForce * 2,
+              y: -config.player.jumpForce * 1.5 // The player can now wall jump higher
             });
             this.emit("jump.left", this);
             this.sensors.left = false;
           } else if (this.sensors.right) {
-            this.speed = -config.player.speed/2;
+            this.speed = -config.player.speed / 2;
             bd.setVelocity(this.body, {
-              x: -config.player.jumpForce*2,
+              x: -config.player.jumpForce * 2,
               y: -config.player.jumpForce
             })
             bd.translate(this.body, {
               x: -5,
               y: -5
             });
-            bd.applyForce(this.body, { 
-              x: this.body.position.x, 
-              y: this.body.position.y 
-            }, { 
-              x: -config.player.jumpForce * 2, 
-              y: -config.player.jumpForce
+            bd.applyForce(this.body, {
+              x: this.body.position.x,
+              y: this.body.position.y
+            }, {
+              x: config.player.jumpForce * 2,
+              y: -config.player.jumpForce * 1.5 // The player can now wall jump higher
             });
             this.emit("jump.right", this);
             this.sensors.right = false;
@@ -152,17 +152,17 @@ class Player extends Body {
     }
 
     // Dash
-    if(config.player.actions.includes("dash")){
-      if(!this.canDash) this.canDash = this.sensors.bottom;
-      if(this.dashTimer > 0) this.dashTimer--;
-      if(keys["Shift"] && this.dashTimer <= 0 && this.canDash) {
-        if((keys["ArrowRight"] || keys["d"] || keys["D"]) && (!keys["ArrowLeft"] && !keys["a"] && !keys["A"])){
+    if (config.player.actions.includes("dash")) {
+      if (!this.canDash) this.canDash = this.sensors.bottom;
+      if (this.dashTimer > 0) this.dashTimer--;
+      if (keys["Shift"] && this.dashTimer <= 0 && this.canDash) {
+        if ((keys["ArrowRight"] || keys["d"] || keys["D"]) && (!keys["ArrowLeft"] && !keys["a"] && !keys["A"])) {
           this.speed = config.player.speed * 4;
           bd.setVelocity(this.body, {
             x: this.speed,
             y: -config.player.speed * 0.5
           });
-        } else if((keys["ArrowLeft"] || keys["a"] || keys["A"]) && (!keys["ArrowRight"] && !keys["d"] && !keys["D"])) {
+        } else if ((keys["ArrowLeft"] || keys["a"] || keys["A"]) && (!keys["ArrowRight"] && !keys["d"] && !keys["D"])) {
           this.speed = config.player.speed * -4;
           bd.setVelocity(this.body, {
             x: this.speed,
@@ -176,7 +176,7 @@ class Player extends Body {
     }
 
     // Dying
-    if(this.body.position.y > (levels[level].bitmap.length * config.world.blockSize) + 500) {
+    if (this.body.position.y > (levels[level].bitmap.length * config.world.blockSize) + 500) {
       plusOne(count)
       this.died = true;
     }
@@ -185,34 +185,34 @@ class Player extends Body {
 
 const configPlayerEvents = () => {
   player.on("update", () => {
-    
+
   })
-  
+
   player.on("collide", (angles) => {
-    
+
   });
 
   player.on("dash", (p) => {
-    
+
   });
 
   player.on("jump.up", (p) => {
-    
+
   })
 
   player.on("jump.left", (p) => {
-    
+
   })
 
   player.on("jump.right", (p) => {
-    
+
   })
 
   player.on("move.left", (p) => {
-    
+
   })
 
   player.on("move.right", (p) => {
-    
+
   })
 }
